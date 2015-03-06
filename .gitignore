@@ -1,0 +1,14 @@
+Code/AutosarFramework_Vs2013.opensdf
+Code/AutosarFramework_Vs2013.sdf
+*.suo
+Code/Src/Cust/St
+Code/Src/Src_Vs2013.vcxproj.user
+/Bin
+.externalToolBuilders/New_Builder.launch
+autosar-framework.sdf
+autosar-framework.vcxproj.user
+Build_test.bat
+autosar-framework.opensdf
+Tools/Util/Excel/~$calc_autosar_dutycycle.xlsx
+.lss
+autosar-framework.vcxproj.ccexclude

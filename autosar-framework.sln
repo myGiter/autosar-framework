@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "autosar-framework", "autosar-framework.vcxproj", "{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Arduino_Due|Win32 = Arduino_Due|Win32
+		Arduino_Esplora|Win32 = Arduino_Esplora|Win32
+		Arduino_Leonardo|Win32 = Arduino_Leonardo|Win32
+		Arduino_Mega|Win32 = Arduino_Mega|Win32
+		Arduino_Uno|Win32 = Arduino_Uno|Win32
+		Debug|Win32 = Debug|Win32
+		PM3_Labor_Vehicle_STM32F407|Win32 = PM3_Labor_Vehicle_STM32F407|Win32
+		PM3_LED_Matrix_STM32F407|Win32 = PM3_LED_Matrix_STM32F407|Win32
+		Release|Win32 = Release|Win32
+		St01_Esplora|Win32 = St01_Esplora|Win32
+		Stm32_F100|Win32 = Stm32_F100|Win32
+		Stm32_F407|Win32 = Stm32_F407|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Due|Win32.ActiveCfg = Arduino_Due|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Due|Win32.Build.0 = Arduino_Due|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Esplora|Win32.ActiveCfg = Arduino_Esplora|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Esplora|Win32.Build.0 = Arduino_Esplora|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Leonardo|Win32.ActiveCfg = Arduino_Leonardo|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Leonardo|Win32.Build.0 = Arduino_Leonardo|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Mega|Win32.ActiveCfg = Arduino_Mega|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Mega|Win32.Build.0 = Arduino_Mega|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Uno|Win32.ActiveCfg = Arduino_Uno|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Arduino_Uno|Win32.Build.0 = Arduino_Uno|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Debug|Win32.Build.0 = Debug|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.PM3_Labor_Vehicle_STM32F407|Win32.ActiveCfg = PM3_Labor_Vehicle_STM32F407|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.PM3_Labor_Vehicle_STM32F407|Win32.Build.0 = PM3_Labor_Vehicle_STM32F407|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.PM3_LED_Matrix_STM32F407|Win32.ActiveCfg = PM3_LED_Matrix_STM32F407|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.PM3_LED_Matrix_STM32F407|Win32.Build.0 = PM3_LED_Matrix_STM32F407|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Release|Win32.ActiveCfg = Release|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Release|Win32.Build.0 = Release|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.St01_Esplora|Win32.ActiveCfg = St01_Esplora|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.St01_Esplora|Win32.Build.0 = St01_Esplora|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Stm32_F100|Win32.ActiveCfg = Stm32_F100|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Stm32_F100|Win32.Build.0 = Stm32_F100|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Stm32_F407|Win32.ActiveCfg = Stm32_F407|Win32
+		{598A7781-1955-4AEB-AE53-BCBD1D6C3C1D}.Stm32_F407|Win32.Build.0 = Stm32_F407|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
