@@ -1,0 +1,5 @@
+.PHONY: SizeAnalysis
+
+SizeAnalysis:
+	@$(GNUECHO) +++ Size analysis for: $(FILE_BIN_APP).$(SUFFIX_ABS)
+	@-$(SIZE) -A -t $(FILE_BIN_APP).$(SUFFIX_ABS) > $(FILE_BIN_APP)_size.txt

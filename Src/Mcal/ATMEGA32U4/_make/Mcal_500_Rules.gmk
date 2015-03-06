@@ -1,0 +1,15 @@
+# Command Line Assignments, which are used in generic Gen_500_Rules.
+
+RULE_SHOW_COMPILER_VERSION_CMD  = $(CC) -v
+
+#   The current filelocation is automatically added.
+RULE_SHOW_COMPILATION_ERRORS_CMD  = $(SED) --text "s|:\([0-9]*\):|(\1) :|" $(PATH_ERR)/$(basename $(@F)).err
+
+# BUILD RULES
+RULE_COMPILE_C_TO_PRE_CMD     =
+RULE_COMPILE_CPP_TO_PRE_CMD   =
+RULE_COMPILE_C_TO_OBJ_CMD     = $(CC) $(CFLAGS)   $(C_DEF_PARAM) $(C_INC_PARAM) -c $< -o $@ 2> $(PATH_ERR)/$(basename $(@F)).err
+RULE_COMPILE_CPP_TO_OBJ_CMD   = $(CPP) $(CPPFLAGS) $(C_DEF_PARAM) $(C_INC_PARAM) -c $< -o $@ 2> $(PATH_ERR)/$(basename $(@F)).err
+RULE_ASSEMBLE_ASM_TO_OBJ_CMD  = $(AS) $(AFLAGS) -c -o $@ $<
+RULE_MOVE_PREPRO_FILE         =
+RULE_MOVE_LIST_FILE           = $(OBJDUMP) -S -C $(PATH_OBJ)/$(basename $(@F)).o > $(PATH_LST)/$(basename $(@F)).lst

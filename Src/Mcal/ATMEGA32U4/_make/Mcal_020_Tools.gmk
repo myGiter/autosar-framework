@@ -1,0 +1,19 @@
+
+AS      = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-g++.exe         # assembler
+CC      = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-g++.exe         # c-compiler
+CPP     = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-g++.exe         # c++-compiler
+LD      = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-g++.exe         # linker/locator
+OBJCOPY = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-objcopy.exe     # absolute object to HEX converter
+OBJDUMP = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-objdump.exe     # gnu object dump tool
+READELF = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-readelf.exe     # binary parser
+SIZE    = $(PATH_TOOLS_COMPILER_BIN)/avr-unknown-elf-size.exe        # Program size calculator
+
+AS             := $(subst /,\,$(AS))
+CC             := $(subst /,\,$(CC))
+CPP            := $(subst /,\,$(CPP))
+DWARF          := $(subst /,\,$(DWARF))
+LD             := $(subst /,\,$(LD))
+OBJCOPY        := $(subst /,\,$(OBJCOPY))
+OBJDUMP        := $(subst /,\,$(OBJDUMP))
+READELF        := $(subst /,\,$(READELF))
+SIZE           := $(subst /,\,$(SIZE))

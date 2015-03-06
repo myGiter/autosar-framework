@@ -1,0 +1,4 @@
+
+.PHONY: HexManip
+HexManip :
+	@$(GNUECHO) +++ TBD: HexManip
