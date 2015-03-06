@@ -1,0 +1,51 @@
+
+PATH_CUST            = $(CURDIR)/Src/Cust/$(TYP_CUSTOMER)/$(TYP_PRJ)
+PATH_GEN             = $(CURDIR)/Src/Gen
+PATH_HAL             = $(CURDIR)/Src/
+PATH_HAL_TARGET      = $(CURDIR)/Src/Hal/Target/$(TYP_TARGET)
+PATH_MCAL            = $(CURDIR)/Src/Mcal/$(TYP_MCAL_THIS)
+PATH_OS              = $(CURDIR)/Src/Os/$(TYP_OS_THIS)
+
+PATH_TOOLS            = Tools
+PATH_TOOLS_UTIL       = $(PATH_TOOLS)/Util
+
+PATH_BIN            = Bin/$(TYP_CUSTOMER)/$(TYP_PRJ)
+PATH_TMP            = $(PATH_BIN)/Tmp
+PATH_EXE            = Exe
+
+PATH_ERR            = $(PATH_TMP)/err
+PATH_LINT           = $(PATH_TMP)/lint
+PATH_MISRA          = $(PATH_TMP)/misra
+PATH_OBJ            = $(PATH_TMP)/obj
+PATH_QAC            = $(PATH_TMP)/qac
+PATH_LST            = $(PATH_TMP)/lst
+PATH_PRE            = $(PATH_TMP)/pre
+
+PATH_TOOLS_QAC_CFG  = $(PATH_TOOLS)/QAC/cfg
+PATH_TOOLS_QAC_BIN  = $(PATH_TOOLS)/QAC/QAC-71/bin
+
+
+FILE_BIN_APP    = $(PATH_BIN)/$(TYP_NAME)
+
+
+# ------------------------------------------------------------------------------
+# temporary files / helpers
+# ------------------------------------------------------------------------------
+COMP_ERR_FILE            = $(PATH_ERR)/ErrAll.err
+MDDFIND_ERR_FILE         = $(PATH_TOOLS_MDDFIND)/mddfind.txt
+LINT_ERR_FILE            = $(PATH_LINT)/_LintAll.lint
+QAC_CFG_FILE             = $(PATH_QAC)/$(QAC_CFG_FILENAME)
+QAC_PRJ_FILE             = $(PATH_QAC)/_qac_gui.prj
+QAC_PRJ_GEN_FILELIST     = $(PATH_QAC)/_qac_gen_filelist.lst
+QAC_RESULT_LIST          = $(PATH_QAC)/_qac_result.txt
+SOFTWARE_DATA_SHEET_FILE = $(FILE_BIN_APP)_DataSheet.htm
+LOCATE_CMD               = $(FILE_BIN_APP).cmd
+FILES_LNK                = ./files_lnk.tmp
+DEFINES_AND_SEARCH_PATH_FILE  = $(PATH_OBJ)/ExternalDefines.defs
+IP_FILE                  = $(PATH_TOOLS_KEIL)/IP.txt
+TOOLS_INI_FILE           = $(PATH_TOOLS_KEIL)/TOOLS.INI
+
+DEFINES_AND_SEARCH_PATH_FILE  = $(PATH_OBJ)/ExternalDefines.defs
+
+
+include $(ENV_MCAL_MAKE)/Mcal_010_Paths.gmk

@@ -1,0 +1,136 @@
+.PHONY: build_all MakeTmpDirectories CreateAndCleanBinDirectory CleanTmpDirectory DoPrepro PrintCompilerVersion PrintIncludePaths
+
+# ------------------------------------------------------------------------------
+# Build Type: WIN or Target
+# ------------------------------------------------------------------------------
+TYP_TARGET_THIS = $(TYP_TARGET)
+
+ifeq ($(TYP_BUILD),win_gcc)
+  TYP_TARGET_THIS := $(TYP_TARGET)_WIN
+endif
+ifeq ($(TYP_BUILD),win_msvc)
+  TYP_TARGET_THIS := $(TYP_TARGET)_WIN
+endif
+
+
+# ------------------------------------------------------------------------------
+# Punctuation
+# ------------------------------------------------------------------------------
+COMMA = ,
+
+MY_NULLSTRING =
+SPACE := $(MY_NULLSTRING) # end of the line
+
+DOLLARS = $$
+
+# ------------------------------------------------------------------------------
+# Directories and Makefiles
+# ------------------------------------------------------------------------------
+ENV_CODE_MAKE       = Src/_make
+ENV_GEN_MAKE        = Src/Gen/_make
+ENV_CUST_MAKE       = Src/Cust/$(TYP_CUSTOMER)/$(TYP_PRJ)/_make
+ENV_HAL_MAKE        = Src/Hal/Target/$(TYP_TARGET_THIS)/_make
+
+include $(ENV_CUST_MAKE)/Cust_000.gmk
+
+ENV_MCAL_MAKE        = Src/Mcal/$(TYP_MCAL_THIS)/_make
+ENV_OS_MAKE          = Src/Os/$(TYP_OS_THIS)/_make
+ENV_TEST_MAKE        = Src/Test/_make
+
+
+include $(ENV_CODE_MAKE)/Code_010_Paths.gmk
+include $(ENV_CODE_MAKE)/Code_020_Tools.gmk
+include $(ENV_CODE_MAKE)/Code_030_Flags.gmk
+include $(ENV_CODE_MAKE)/Code_050_Files.gmk
+include $(ENV_CODE_MAKE)/Code_070_Link.gmk
+
+
+include $(ENV_CODE_MAKE)/Code_100_HexManip.gmk
+include $(ENV_CODE_MAKE)/Code_120_QACMisra.gmk
+include $(ENV_CODE_MAKE)/Code_150_Sizes.gmk
+include $(ENV_CODE_MAKE)/Code_500_Rules.gmk
+
+
+# ------------------------------------------------------------------------------
+# Basic Rules
+# ------------------------------------------------------------------------------
+MakeTmpDirectories:
+	@$(GNUECHO) +++ making tmp directories
+	@if not exist $(PATH_ERR)                     $(MKDIR) $(subst /,\,$(PATH_ERR))
+	@if not exist $(PATH_LINT)                    $(MKDIR) $(subst /,\,$(PATH_LINT))
+	@if not exist $(PATH_MISRA)                   $(MKDIR) $(subst /,\,$(PATH_MISRA))
+	@if not exist $(PATH_OBJ)                     $(MKDIR) $(subst /,\,$(PATH_OBJ))
+	@if not exist $(PATH_QAC)                     $(MKDIR) $(subst /,\,$(PATH_QAC))
+	@if not exist $(PATH_LST)                     $(MKDIR) $(subst /,\,$(PATH_LST))
+	@if not exist $(PATH_PRE)                     $(MKDIR) $(subst /,\,$(PATH_PRE))
+
+
+CreateAndCleanBinDirectory:
+	@$(GNUECHO) +++ cleaning bin directory
+	@if not exist $(PATH_BIN)                    $(MKDIR) $(subst /,\,$(PATH_BIN))
+	@$(QDEL) $(subst /,\,$(PATH_BIN)/*.*)      > NUL  2> NUL
+
+AlPowerToolsSupportFile:
+	@if not exist $(PATH_OBJ) $(MKDIR) $(subst /,\,$(PATH_OBJ))
+	@$(GNUECHO) $(addprefix -d, $(C_DEFINES))                                                       >$(DEFINES_AND_SEARCH_PATH_FILE)
+	@$(GNUECHO) $(addprefix -i, $(C_INCLUDES_PRJ) $(C_INCLUDES))                                   >>$(DEFINES_AND_SEARCH_PATH_FILE)
+	@$(GNUECHO) $(addprefix -m, $(subst \,/,$(subst /.\,/,$(realpath $(sort $(MAKEFILE_LIST))))))  >>$(DEFINES_AND_SEARCH_PATH_FILE)
+
+PrintCompilerVersion:
+	@$(GNUECHO) +++ print GNUmake version +++
+	@$(MAKE) -v
+	@$(GNUECHO) +++ print compiler version +++
+	@$(RULE_SHOW_COMPILER_VERSION_CMD)
+
+
+PrintIncludePaths:
+	@$(GNUECHO) +++ print compiler include paths +++
+	@$(GNUECHO) $(subst $(SPACE),;,$(patsubst %,$(DOLLARS)(SolutionDir)%,$(subst $(CURDIR)/,,$(C_INCLUDES))))
+	@$(GNUECHO) +++ print compiler definitions +++
+	@$(GNUECHO) $(subst $(SPACE),,$(addsuffix ;, $(C_DEFINES)))
+
+
+CleanTmpDirectory:
+	@$(GNUECHO) +++ cleaning tmp directory
+	@if exist $(PATH_ERR)/*.*      $(DEL) /Q /S $(subst /,\,$(PATH_ERR)/*.*)      > NUL  2> NUL
+	@if exist $(PATH_LINT)/*.*     $(DEL) /Q /S $(subst /,\,$(PATH_LINT)/*.*)     > NUL  2> NUL
+	@if exist $(PATH_MISRA)/*.*    $(DEL) /Q /S $(subst /,\,$(PATH_MISRA)/*.*)    > NUL  2> NUL
+	@if exist $(PATH_OBJ)/*.*      $(DEL) /Q /S $(subst /,\,$(PATH_OBJ)/*.*)      > NUL  2> NUL
+	@if exist $(PATH_QAC)/*.*      $(DEL) /Q /S $(subst /,\,$(PATH_QAC)/*.*)      > NUL  2> NUL
+	@if exist $(PATH_LST)/*.*      $(DEL) /Q /S $(subst /,\,$(PATH_LST)/*.*)      > NUL  2> NUL
+	@if exist $(PATH_PRE)/*.*      $(DEL) /Q /S $(subst /,\,$(PATH_PRE)/*.*)      > NUL  2> NUL
+
+# ------------------------------------------------------------------------------
+# Rules for Dynamic Targets for Build Type
+# ------------------------------------------------------------------------------
+ifeq ($(TYP_BUILD),win_msvc)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory PrintCompilerVersion PrintIncludePaths LinkObjectFiles HexManip
+endif
+
+ifeq ($(TYP_BUILD),win_gcc)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory PrintCompilerVersion PrintIncludePaths LinkObjectFiles HexManip
+endif
+
+ifeq ($(TYP_BUILD),default)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory PrintCompilerVersion PrintIncludePaths LinkObjectFiles HexManip SizeAnalysis
+endif
+
+ifeq ($(TYP_BUILD),misra)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory AlPowerToolsSupportFile QAC_Config DoMisra
+endif
+
+ifeq ($(TYP_BUILD),lint)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory AlPowerToolsSupportFile DoLint LintResult
+endif
+
+ifeq ($(TYP_BUILD),prepro)
+  build_all: MakeTmpDirectories CreateAndCleanBinDirectory AlPowerToolsSupportFile DoPrepro
+endif
+
+
+# ------------------------------------------------------------------------------
+# Rules: Main
+# ------------------------------------------------------------------------------
+clean      : CleanTmpDirectory
+rebuild    : CleanTmpDirectory build_all QAC_Config QAC_Project
+all        : build_all

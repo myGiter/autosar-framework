@@ -12,3 +12,9 @@ autosar-framework.opensdf
 Tools/Util/Excel/~$calc_autosar_dutycycle.xlsx
 .lss
 autosar-framework.vcxproj.ccexclude
+Build_*.bat
+Docu/
+Src/Cust/_Stub/
+Src/Cust/PM3/
+Src/Mcal/_Stub/
+Src/Cust/Student/

@@ -1,0 +1,12 @@
+
+C_INCLUDES   = $(PATH_CUST)         \
+               $(PATH_HAL)          \
+               $(PATH_HAL_TARGET)   \
+               $(PATH_MCAL)         \
+               $(PATH_OS)           \
+               $(PATH_GEN)          \
+
+
+C_DEFINES   = 
+
+include $(ENV_MCAL_MAKE)/Mcal_030_Flags.gmk

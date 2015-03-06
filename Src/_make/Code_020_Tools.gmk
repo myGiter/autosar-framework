@@ -1,0 +1,36 @@
+
+CAT            = $(PATH_TOOLS_UTIL)/cat/cat.exe               # unix cat tool
+DEL            = del                                          # DOS delete
+DWARF          = $(PATH_TOOLS_COMPILER_BIN)/$(DWARF_EXEC)     # DWARF / ELF parser
+GAWK           = $(PATH_TOOLS_UTIL)/gawk/gawk.exe             # gawk tool
+GNUECHO        = $(PATH_TOOLS_UTIL)/ECHO/ECHO.exe             # GNUECHO tool
+HEX_MANIP      = $(PATH_TOOLS)/AL/HexTools/ALHexManip.exe     # AL hex manipulation
+MAKE           = $(PATH_TOOLS_UTIL)/make/make                 # GNUmake tool
+MAKEDEP        = $(PATH_TOOLS_UTIL)/makedep/makedep           # makedep tool
+MKDIR          = mkdir                                        # DOS make directory
+MV             = $(PATH_TOOLS_UTIL)/mv/mv                     # unix move tool
+NM             = $(PATH_TOOLS_UTIL)/nm/nm.exe                 # unix names tool
+PYTHON         = $(PATH_TOOLS_UTIL)/Python27/python.exe       # Python script tool
+QDEL           = $(PATH_TOOLS_UTIL)/qdel/qdel.bat             # DOS qdel batch file
+RUN            = $(PATH_TOOLS_UTIL)/BatchCallWrapper/run.bat  # BatchCallWrapper command
+SED            = $(PATH_TOOLS_UTIL)/sed/sed                   # sed command
+TEE            = $(PATH_TOOLS_UTIL)/tee/tee                   # tee tool
+
+CAT            := $(subst /,\,$(CAT))
+DEL            := $(subst /,\,$(DEL))
+DWARF          := $(subst /,\,$(DWARF))
+GAWK           := $(subst /,\,$(GAWK))
+GNUECHO        := $(subst /,\,$(GNUECHO))
+HEX_MANIP      := $(subst /,\,$(HEX_MANIP))
+MAKE           := $(subst /,\,$(MAKE))
+MAKEDEP        := $(subst /,\,$(MAKEDEP))
+MKDIR          := $(subst /,\,$(MKDIR))
+MV             := $(subst /,\,$(MV))
+NM             := $(subst /,\,$(NM))
+PYTHON         := $(subst /,\,$(PYTHON))
+QDEL           := $(subst /,\,$(QDEL))
+RUN            := $(subst /,\,$(RUN))
+SED            := $(subst /,\,$(SED))
+TEE            := $(subst /,\,$(TEE))
+
+include $(ENV_MCAL_MAKE)/Mcal_020_Tools.gmk

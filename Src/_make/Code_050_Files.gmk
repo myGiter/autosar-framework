@@ -1,0 +1,26 @@
+
+# ------------------------------------------------------------------------------
+# make files containing specialized file lists
+# ------------------------------------------------------------------------------
+
+include $(ENV_CUST_MAKE)/Cust_050_Files.gmk
+include $(ENV_GEN_MAKE)/Gen_050_Files.gmk
+include $(ENV_HAL_MAKE)/Hal_050_Files.gmk
+include $(ENV_MCAL_MAKE)/Mcal_050_Files.gmk
+include $(ENV_OS_MAKE)/Os_050_Files.gmk
+
+
+FILES_ALL_FROM_MAKEFILES = $(FILES_CUST) $(FILES_GEN) $(FILES_HAL) $(FILES_MCAL) $(FILES_OS)
+
+
+# VPATH is required for the maker to find the C- and Assembler- Source files.
+# Extract the directory/module names from the file list with the dir command
+# and remove the duplicated directory names with the sort command.
+# FILES_PRJ is listed first to make sure that C-Files in project directory are compiled first.
+VPATH     := $(sort $(dir $(FILES_ALL_FROM_MAKEFILES))  $(PATH_OBJ))
+
+
+# ------------------------------------------------------------------------------
+# file lists
+# ------------------------------------------------------------------------------
+FILES_OBJ   = $(addprefix $(PATH_OBJ)/,$(notdir $(addsuffix .$(SUFFIX_OBJ), $(FILES_ALL_FROM_MAKEFILES))))

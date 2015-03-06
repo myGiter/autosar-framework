@@ -1,0 +1,93 @@
+
+include $(ENV_MCAL_MAKE)/Mcal_500_Rules.gmk
+
+
+# Delete the default suffixes. We do not use implicit rules.
+# Pattern rules with %... are used instead.
+.SUFFIXES:
+
+# C Compilation: C-Source Files
+$(PATH_OBJ)/%.$(SUFFIX_OBJ) : %.c
+	@$(GNUECHO) +++ compile C: $< to $@
+
+  # Compile
+	@if exist $(PATH_OBJ)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_OBJ)/$(basename $(@F))).*  2> NUL
+	@if exist $(PATH_LST)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_LST)/$(basename $(@F))).*  2> NUL
+	@if exist $(PATH_ERR)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_ERR)/$(basename $(@F))).*  2> NUL
+
+  # Call the compiler
+	@-$(RULE_COMPILE_C_TO_OBJ_CMD)
+	@-$(RULE_COMPILE_C_REFORMAT_MSGS)
+	@-$(RULE_MOVE_LIST_FILE)
+	@-$(RULE_MOVE_PREPRO_FILE)
+	@-$(RULE_SHOW_COMPILATION_ERRORS_CMD)
+
+
+  # Generate dependency file
+	@-$(GNUECHO) -n $@:" " > $(PATH_OBJ)/$(basename $(@F)).d
+	@-$(MAKEDEP) -n -d $(C_INC) $< | $(SED) --text "s|\\|\/|g" >> $(PATH_OBJ)/$(basename $(@F)).d
+
+  # Add the filename to the QAC file list
+	@$(GNUECHO) $(subst /,\\,$(CURDIR)/$<) >> $(QAC_PRJ_GEN_FILELIST)
+
+
+# C++ Compilation: C++-Source Files
+$(PATH_OBJ)/%.$(SUFFIX_OBJ) : %.cpp
+	@$(GNUECHO) +++ compile C++: $< to $@
+
+  # Compile
+	@if exist $(PATH_OBJ)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_OBJ)/$(basename $(@F))).*  2> NUL
+	@if exist $(PATH_LST)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_LST)/$(basename $(@F))).*  2> NUL
+	@if exist $(PATH_ERR)/$(basename $(@F)).*   del /Q $(subst /,\,$(PATH_ERR)/$(basename $(@F))).*  2> NUL
+
+  # Call the compiler
+	@-$(RULE_COMPILE_CPP_TO_OBJ_CMD)
+	@-$(RULE_COMPILE_CPP_REFORMAT_MSGS)
+	@-$(RULE_MOVE_LIST_FILE)
+	@-$(RULE_MOVE_PREPRO_FILE)
+	@-$(RULE_SHOW_COMPILATION_ERRORS_CMD)
+
+  # Generate the dependency file
+	@-$(GNUECHO) -n $@:" " > $(PATH_OBJ)/$(basename $(@F)).d
+	@-$(MAKEDEP) -n -d $(C_INC) $< | $(SED) --text "s|\\|\/|g" >> $(PATH_OBJ)/$(basename $(@F)).d
+
+  # Add the filename to the QAC file list
+	@$(GNUECHO) $(subst /,\\,$(CURDIR)/$<) >> $(QAC_PRJ_GEN_FILELIST)
+
+
+# Assembly: Assembler Files
+$(PATH_OBJ)/%.$(SUFFIX_OBJ) : %.$(SUFFIX_ASM)
+	@$(GNUECHO) +++ assemble: $< to $@
+	@-$(RULE_ASSEMBLE_ASM_TO_OBJ_CMD)
+
+# ------------------------------------------------------------------------------
+# generic QAC/MISRA rules
+# ------------------------------------------------------------------------------
+$(PATH_QAC)/%.qac_txt : %.c
+  # Generate QAC/MISRA message
+	@$(GNUECHO) +++ MISRA/QAC analysis: $< to $@
+
+  # generate QAC/MISRA console output and output file
+	$(QAC) -via $(QAC_CFG_FILE) $<
+	$(QAC_ERR_DSP) QAC -via $(QAC_CFG_FILE) -file $(basename $(@F)).qac_txt $<
+	$(GAWK) /"warning - QAC\(Prio"/ $(PATH_QAC)/$(basename $(@F)).qac_txt
+	$(GAWK) /"warning - QAC\(Prio"/ $(PATH_QAC)/$(basename $(@F)).qac_txt >> $(QAC_RESULT_LIST)
+  # Add the filename to the QAC file list
+	@$(GNUECHO) $(subst /,\\,$(CURDIR)/$<) >> $(QAC_PRJ_GEN_FILELIST)
+
+
+# ------------------------------------------------------------------------------
+# Precompiler call
+# ------------------------------------------------------------------------------
+$(PATH_OBJ)/%.pre :: %.c
+  # Call the preprocessor
+	@-$(RULE_COMPILE_C_TO_PRE_CMD)
+
+
+$(PATH_OBJ)/%.pre :: %.cpp
+  # Call the preprocessor
+	@-$(RULE_COMPILE_CPP_TO_PRE_CMD)
+
+
+.PHONY: DoPrepro
+DoPrepro: $(subst .$(SUFFIX_OBJ),.pre,$(FILES_OBJ))

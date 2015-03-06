@@ -1,0 +1,48 @@
+.PHONY: DoMisra QAC_Project QAC_Config
+
+FILES_QAC_TXT = $(subst $(PATH_OBJ),$(PATH_QAC),$(subst .$(SUFFIX_OBJ),.qac_txt,$(FILES_OBJ)))
+
+
+include $(ENV_MCAL_MAKE)/Mcal_120_QACMisra.gmk
+
+# ------------------------------------------------------------------------------
+# QAC analysis configuration
+# ------------------------------------------------------------------------------
+QAC_Config:
+  # Create the MISRA result file
+#	@if not exist $(PATH_QAC)          mkdir $(subst /,\,$(PATH_QAC))
+	@$(GNUECHO) "" > $(QAC_RESULT_LIST)
+  # Create the $(QAC_CFG_FILE) file
+	@$(GNUECHO) $(wordlist   1,  49, $(QAC_INCLUDES))     > $(QAC_CFG_FILE)
+	@$(GNUECHO) $(wordlist  50,  99, $(QAC_INCLUDES))     >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(wordlist 100, 149, $(QAC_INCLUDES))     >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(wordlist 150, 199, $(QAC_INCLUDES))     >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(wordlist 200, 249, $(QAC_INCLUDES))     >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(QAC_EXCLUDES)                           >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(QAC_DEFINES)                            >> $(QAC_CFG_FILE)
+	@$(GNUECHO) $(QAC_VIA)                                >> $(QAC_CFG_FILE)
+
+
+# ------------------------------------------------------------------------------
+# QAC Project Creation
+# ------------------------------------------------------------------------------
+QAC_Project:
+	@$(GNUECHO) Creating QAC GUI project file
+	@$(GNUECHO)  VersionTag45                                                       >  $(QAC_PRJ_FILE)
+	@$(GNUECHO)  StartProjectMarker                                                 >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  FolderName=$(TYP_NAME)$(NAME_MOD)$(NAME_VAR)                       >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  SourcePath=$(CURDIR)                                               >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  OutputPath=$(CURDIR)/$(PATH_QAC)                                   >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  SubsPers=$(CURDIR)/$(PATH_QAC)/$(QAC_CFG_FILENAME)                 >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  AnalPers=$(CURDIR)/$(PATH_QAC)/$(QAC_CFG_FILENAME)                 >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  CompPers=$(CURDIR)/$(PATH_TOOLS_QAC_CFG)/$(QAC_COMPILER_FILENAME)  >> $(QAC_PRJ_FILE)
+	@if exist $(QAC_PRJ_GEN_FILELIST) @$(CAT)      $(QAC_PRJ_GEN_FILELIST)          >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  EndContainedFilesMarker                                            >> $(QAC_PRJ_FILE)
+	@$(GNUECHO)  EndSubProjectMarker                                                >> $(QAC_PRJ_FILE)
+
+
+# ------------------------------------------------------------------------------
+# MISRA check (QAC) the Project
+# ------------------------------------------------------------------------------
+DoMisra: $(FILES_QAC_TXT)
+	$(AL_QAC_RESULT) $(QAC_RESULT_LIST)
