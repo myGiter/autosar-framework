@@ -1,0 +1,3 @@
+
+FILES_OS    = $(PATH_OS)/Bsw/Servl/Osal/Os        \
+              $(PATH_OS)/Bsw/Servl/Osal/OsIdle
