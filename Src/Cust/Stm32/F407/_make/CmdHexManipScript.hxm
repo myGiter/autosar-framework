@@ -1,0 +1,6 @@
+
+NEW_BUFFER   Buf_8000000_to_8007FFF  FROM_FILE     inFile -useAreas={{0x8000000, 0x8000}}  -setByteOrder=BigEndian
+FILL_BUFFER  Buf_8000000_to_8007FFF  WITH_FILLER   { 0xFF }
+
+WRITE_FILE   outFile  WITH_BUFFERS  {Buf_8000000_to_801FFFF}  -setFormat=IntelHexExtended
+WRITE_FILE   binFile  WITH_BUFFERS  {Buf_8000000_to_801FFFF}  -setFormat=RawBinary

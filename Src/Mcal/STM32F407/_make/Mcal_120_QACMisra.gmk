@@ -1,0 +1,18 @@
+# ------------------------------------------------------------------------------
+# Define the QAC version and configuration information
+# ------------------------------------------------------------------------------
+QAC_VERSION            = 71
+QAC_CFG_FILENAME       = _qac_cfg.txt
+QAC_COMPILER_FILENAME  = cosmic.p_c
+
+# ------------------------------------------------------------------------------
+# QAC environment variables
+# ------------------------------------------------------------------------------
+export QACBIN=$(PATH_TOOLS_QAC_BIN)
+export QACOUTPATH=$(PATH_QAC)
+
+FILES_QAC_CFG = style.p_a $(QAC_COMPILER_FILENAME) misra.p_s
+QAC_INCLUDES      = $(addprefix \n-i \"$(CURDIR)/, $(addsuffix \", $(subst ;,,$(C_INCLUDES))))
+QAC_EXCLUDES      = 
+QAC_DEFINES       = $(subst -d,\n-d ,$(addprefix -d, $(C_DEFINES))  -d__CSMC__=$(CC_VERSION))
+QAC_VIA           = $(addprefix \n-via \"$(CURDIR)/$(PATH_TOOLS_QAC_CFG)/, $(addsuffix \", $(FILES_QAC_CFG)))

@@ -1,0 +1,3 @@
+FILES_LD =
+
+include $(ENV_CUST_MAKE)/Cust_070_Link.gmk

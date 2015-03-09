@@ -1,0 +1,20 @@
+FILES_MCAL    = $(PATH_MCAL)/Bsw/Mcal/Adc/Adc                        \
+                $(PATH_MCAL)/Bsw/Mcal/Dio/Dio                        \
+                $(PATH_MCAL)/Bsw/Mcal/Gpt/Gpt                        \
+                $(PATH_MCAL)/Bsw/Mcal/Icu/Icu                        \
+                $(PATH_MCAL)/Bsw/Mcal/Mcu/mcal_cpu                   \
+                $(PATH_MCAL)/Bsw/Mcal/Mcu/mcal_osc                   \
+                $(PATH_MCAL)/Bsw/Mcal/Mcu/Mcu                        \
+                $(PATH_MCAL)/Bsw/Mcal/Port/Port                      \
+                $(PATH_MCAL)/Bsw/Mcal/Pwm/mcal_pwm                   \
+                $(PATH_MCAL)/Bsw/Mcal/Pwm/Pwm                        \
+                $(PATH_MCAL)/Bsw/Mcal/Spi/Spi                        \
+                $(PATH_MCAL)/Bsw/Mcal/Wdg/mcal_wdg                   \
+                $(PATH_MCAL)/Bsw/Mcal/Wdg/Wdg                        \
+                $(PATH_MCAL)/Bsw/Startup/crt0                        \
+                $(PATH_MCAL)/Bsw/Startup/crt0_init_ram               \
+                $(PATH_MCAL)/Bsw/Startup/crt1                        \
+                $(PATH_MCAL)/Bsw/Startup/gcc_patch                   \
+                $(PATH_MCAL)/Bsw/Startup/int_vect                    \
+                $(PATH_GEN)/Bsw/Util/STL/impl/cmath_impl_gamma       \
+                $(PATH_GEN)/Bsw/Util/STL/impl/arm/arm_float_limits   \
