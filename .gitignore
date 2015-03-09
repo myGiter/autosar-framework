@@ -18,3 +18,8 @@ Src/Cust/_Stub/
 Src/Cust/PM3/
 Src/Mcal/_Stub/
 Src/Cust/Student/
+Tools/Util
+Tools/Key
+Tools/Driver
+Tools/Os
+Tools/Compiler/SDCC
