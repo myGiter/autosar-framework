@@ -1,0 +1,12 @@
+FILES_GEN    = $(PATH_GEN)/Bsw/Servl/EcuM/EcuM                                      \
+               $(PATH_GEN)/Bsw/Servl/EcuM/Start                                     \
+               $(PATH_GEN)/Bsw/Hal/IoHwAb/IoHwAb                                    \
+               $(PATH_GEN)/Swc/App/App                                              \
+               $(PATH_GEN)/Swc/App/myApp                                            \
+               $(PATH_GEN)/Swc/EcuM/EcuM_MainFunc
+
+#               $(PATH_GEN)/Bsw/Common/test_debug                                    \
+#               $(PATH_GEN)/Swc/Debug/Monitor/debug_monitor                          \
+#               $(PATH_GEN)/Swc/EcuM/EcuM_MainFunc                                   \
+#               $(PATH_GEN)/Bsw/Debug/Monitor/single_pin_debug_monitor               \
+#               $(PATH_GEN)/Bsw/Debug/Monitor/single_pin_debug_monitor_base
