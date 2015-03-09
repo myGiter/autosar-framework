@@ -1,0 +1,17 @@
+
+FILES_CUST    = $(PATH_CUST)/Bsw/Servl/EcuM/EcuM_Cfg                                         \
+                $(PATH_CUST)/Bsw/Hal/IoHwAb/IoHwAb_Cfg                                       \
+                $(PATH_CUST)/Bsw/Mcal/Adc/Adc_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Dio/Dio_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Gpt/Gpt_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Icu/Icu_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Mcu/Mcu_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Port/Port_Cfg                                          \
+                $(PATH_CUST)/Bsw/Mcal/Pwm/Pwm_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Spi/Spi_Cfg                                            \
+                $(PATH_CUST)/Bsw/Mcal/Wdg/Wdg_Cfg                                            \
+                $(PATH_CUST)/Rte/Rte                                                         \
+                $(PATH_CUST)/Swc/Tasks                                                       \
+                $(PATH_HAL)/Hal/Cdd/Debug/Monitor/single_pin_debug_monitor                   \
+                $(PATH_HAL)/Hal/Cdd/Debug/Monitor/single_pin_debug_monitor_base              \
+                $(PATH_GEN)/Swc/Debug/Monitor/debug_monitor                                  \

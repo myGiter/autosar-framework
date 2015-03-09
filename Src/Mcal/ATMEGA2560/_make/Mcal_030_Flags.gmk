@@ -1,0 +1,83 @@
+
+# The results of this file are:
+#   CFLAGS       (Tool-specific flags for the C-compiler)
+#   CPPFLAGS     (Tool-specific flags for the C++-compiler)
+#   AFLAGS       (Tool-specific flags for the assembler)
+#   LFLAGS       (Tool-specific flags for the linker)
+#   C_INC_PARAM  (Complete tool-specific list of include directories for the compiler)
+#   C_DEF_PARAM  (Complete tool-specific list of definitions for the compiler)
+
+TGTFLAGS    = -mmcu=atmega2560                  \
+              -fsigned-char
+
+GCCFLAGS    = $(TGTFLAGS)                       \
+              -Wall                             \
+              -Wextra                           \
+              -pedantic                         \
+              -Wstack-usage=128                 \
+              -gdwarf-2                         \
+              -fno-exceptions                   \
+              -Os                               \
+              -fno-inline-functions             \
+              -ffunction-sections               \
+              -fdata-sections                   \
+              -fstack-usage
+
+#after -pedantic
+#              -Wmain                            \
+#              -Wundef                           \
+#              -Wsign-conversion                 \
+#              -Wfloat-equal                     \
+#              -Wunreachable-code                \
+#              -Wmissing-declarations            \
+#              -Wshadow                          \
+#              -Wswitch-default                  \
+#              -Wswitch-enum                     \
+#              -Wcast-align                      \
+#              -Wmissing-include-dirs            \
+#              -Winit-self                       \
+
+
+
+#              -Os                               \
+#              -fno-inline-functions
+
+#              -O3                                          \
+#              -finline-functions                           \
+#              -finline-limit=64
+
+CFLAGS      = $(GCCFLAGS)                                  \
+              -x c                                         \
+              -std=c99
+
+CPPFLAGS    = $(GCCFLAGS)                                  \
+              -x c++                                       \
+              -std=c++11                                   \
+              -Wsign-conversion                            \
+              -fno-rtti                                    \
+              -fstrict-enums                               \
+              -fno-use-cxa-atexit                          \
+              -fno-use-cxa-get-exception-ptr               \
+              -fno-nonansi-builtins                        \
+              -fno-threadsafe-statics                      \
+              -fno-enforce-eh-specs
+
+AFLAGS      = $(GCCFLAGS)                                  \
+              -x assembler                                 \
+              -fno-use-cxa-atexit
+
+LFLAGS      = $(GCCFLAGS)                                  \
+              -x none                                      \
+              -nostartfiles                                \
+              -nostdlib                                    \
+              -Wl,--gc-sections
+
+C_INCLUDES := $(C_INCLUDES)                                \
+              $(PATH_TOOLS_COMPILER_INC)                   \
+              $(PATH_GEN)/Bsw/Util/STL                     \
+              $(PATH_GEN)/Bsw/Util/STL_C++14_Compatibility
+
+C_DEFINES  := $(C_DEFINES)
+
+C_INC_PARAM       = $(addprefix -I, $(C_INCLUDES))
+C_DEF_PARAM       = $(addprefix -D, $(C_DEFINES))

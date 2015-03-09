@@ -1,0 +1,10 @@
+
+FILES_LD := $(PATH_CUST)/_make/$(TYP_PRJ)app.$(SUFFIX_LDF)
+
+LinkObjectFiles : $(FILES_LD) $(FILES_OBJ)
+	@-$(GNUECHO) +++ linking application: $(FILE_BIN_APP).$(SUFFIX_ABS)
+	@-$(LD) $(LFLAGS) $(FILES_OBJ) -Wl,-T$(FILES_LD),-Map,$(FILE_BIN_APP).map,--gc-sections -o $(FILE_BIN_APP).$(SUFFIX_ABS)
+	@$(GNUECHO) +++ extracting hex file: $(FILE_BIN_APP).$(SUFFIX_HEX)
+	@-$(OBJCOPY) -O ihex $(FILE_BIN_APP).$(SUFFIX_ABS) $(FILE_BIN_APP).$(SUFFIX_HEX)
+	@$(GNUECHO) +++ extracting bin file: $(FILE_BIN_APP).bin
+	@-$(OBJCOPY) -S -O binary $(FILE_BIN_APP).$(SUFFIX_ABS) $(FILE_BIN_APP).bin
