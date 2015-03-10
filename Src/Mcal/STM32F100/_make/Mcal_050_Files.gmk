@@ -9,7 +9,6 @@ FILES_MCAL    = $(PATH_MCAL)/Bsw/Mcal/Adc/Adc                        \
                 $(PATH_MCAL)/Bsw/Mcal/Pwm/mcal_pwm                   \
                 $(PATH_MCAL)/Bsw/Mcal/Pwm/Pwm                        \
                 $(PATH_MCAL)/Bsw/Mcal/Spi/Spi                        \
-                $(PATH_MCAL)/Bsw/Mcal/Wdg/mcal_wdg                   \
                 $(PATH_MCAL)/Bsw/Mcal/Wdg/Wdg                        \
                 $(PATH_MCAL)/Bsw/Startup/crt0                        \
                 $(PATH_MCAL)/Bsw/Startup/crt0_init_ram               \

@@ -12,8 +12,8 @@
 EXTERN_C
 const Wdg_ConfigType Wdg_ModeConfiguration =
 {
-  0U
-//  WDG_PRESCALER_500_ms | WDG_CFG_RESET
-  //WDG_PRESCALER_8_s | WDG_CFG_RESET
+0
+  //WDG_PRESCALER_500_ms | WDG_CFG_RESET
+//  WDG_PRESCALER_8_s | WDG_CFG_RESET
   //WDG_PRESCALER_8_s | WDG_CFG_NONE
 };

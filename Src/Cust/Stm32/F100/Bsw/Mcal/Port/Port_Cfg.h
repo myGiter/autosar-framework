@@ -36,7 +36,7 @@
   // Number of configurated Pins.
   typedef struct struct_Port_ConfigType
   {
-    const tPortPin PortNumberOfPortPins[2U];
+    const tPortPin PortNumberOfPortPins[3U];
   }
   Port_ConfigType;
 

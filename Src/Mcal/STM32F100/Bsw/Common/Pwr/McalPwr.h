@@ -7,27 +7,25 @@
 //  or copy at http://www.boost.org/LICENSE_1_0.txt ) 
 //
 
-#ifndef MCAL_IRQ_2015_01_30_H
-  #define MCAL_IRQ_2015_01_30_H
+#ifndef MCAL_PWR_2015_03_10_H
+  #define MCAL_PWR_2015_03_10_H
 
   #include <Bsw/Common/Std_Types.h>
 
-  INLINE void McalIrqDisableAll() { __asm__ volatile ("cpsid i"); }
-  INLINE void McalIrqEnableAll () { __asm__ volatile ("cpsie i"); }
-
-  EXTERN_C void McalIrqInit(void);
+  INLINE void McalPwrSleepNow(void)    { __asm__ volatile ("wfi"); }
+  INLINE void McalPwrSleepOnExit(void) { __asm__ volatile ("wfe"); }
 
   #if defined(__cplusplus)
 
     namespace mcal
     {
-      namespace irq
+      namespace pwr
       {
-        inline void disable_all(void) { ::McalIrqDisableAll(); }
-        inline void enable_all (void) { ::McalIrqEnableAll(); }
+        inline void sleep_now()     { ::McalPwrSleepNow();    }
+        inline void sleep_on_exit() { ::McalPwrSleepOnExit(); }
       }
     }
 
   #endif
 
-#endif // MCAL_IRQ_2015_01_30_H
+#endif // MCAL_PWR_2015_03_10_H

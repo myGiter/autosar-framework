@@ -90,9 +90,7 @@ namespace os
                     tcb.initialize();
                   });
 
-    bool ecu_state_is_shutdown = false;
-
-    do
+    for(;;)
     {
       // Find the next ready task using a priority-based find algorithm.
       const task_list_type::const_iterator it_ready_task =
@@ -103,33 +101,15 @@ namespace os
                        return tcb.execute();
                      });
 
-      // Acquire the new ecu state from the running task.
-      EcuM_StateType ecu_state_from_the_running_task;
-
-      const Std_ReturnType result = EcuM_GetState(&ecu_state_from_the_running_task);
-
-      static_cast<void>(result);
-
-      ecu_state_is_shutdown = (ecu_state_from_the_running_task == ECUM_STATE_SHUTDOWN);
-
       // Did we reach the end of the list without finding any ready-task?
       const bool no_ready_task_was_found = (it_ready_task == task_list.end());
 
       // If no ready-task was found, then service the idle task.
-      if(no_ready_task_was_found && (ecu_state_is_shutdown == false))
+      if(no_ready_task_was_found)
       {
         OS_TASK_IDLE();
       }
     }
-    while(ecu_state_is_shutdown == false);
-
-    // Here, we know that the state ECUM_STATE_SHUTDOWN has been set by a user.
-    // We call ShutdownOS(), and ShutdownOS() will subsequently call
-    // the application-specific instance of ShutdownHook_App().
-    // Control might or might *not* return to the main() subroutine,
-    // depending on the application-specific functionality of
-    // ShutdownHook_App().
-    ShutdownOS();
   }
 }
 
@@ -218,8 +198,6 @@ void ShutdownOS(void)
   EcuM_ShutdownHook_App();
 
   ShutdownHook();
-
-  EcuM_Shutdown();
 }
 
 EXTERN_C

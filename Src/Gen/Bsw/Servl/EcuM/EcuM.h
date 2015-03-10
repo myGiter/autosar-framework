@@ -14,6 +14,7 @@
   // includes
   //=============================================================================
 
+  #include <Bsw/Common/Cpu/McalCpu.h>
   #include <Bsw/Common/Std_Types.h>
   #include <Bsw/Servl/EcuM/EcuM_Cfg.h>
   #include <Bsw/Mcal/Mcal.h>
@@ -41,23 +42,23 @@
   #define ECUM_STATE_STARTUP           ((EcuM_StateType) 0x10U)
   #define ECUM_STATE_APP_RUN           ((EcuM_StateType) 0x32U)
 
-//  #define ECUM_STATE_SLEEP             ((EcuM_StateType) 0x50U)
-//  #define ECUM_STATE_WAKEUP            ((EcuM_StateType) 0x20U)
+  #define ECUM_STATE_SLEEP             ((EcuM_StateType) 0x50U)
+  #define ECUM_STATE_WAKEUP            ((EcuM_StateType) 0x20U)
 //  #define ECUM_SUBSTATE_MASK           ((EcuM_StateType) 0x0FU)
 //  #define ECUM_STATE_WAKEUP_WAKESLEEP  ((EcuM_StateType) 0x25U)
 //  #define ECUM_STATE_WAKEUP_ONE        ((EcuM_StateType) 0x21U)
 
-//  #define ECUM_STATE_PREP_SHUTDOWN     ((EcuM_StateType) 0x44U)
+  #define ECUM_STATE_PREP_SHUTDOWN     ((EcuM_StateType) 0x44U)
   #define ECUM_STATE_STARTUP_TWO       ((EcuM_StateType) 0x12U)
 //  #define ECUM_STATE_WAKEUP_TTII       ((EcuM_StateType) 0x26U)
 //  #define ECUM_STATE_WAKEUP_VALIDATION ((EcuM_StateType) 0x22U)
-//  #define ECUM_STATE_GO_SLEEP          ((EcuM_StateType) 0x49U)
+  #define ECUM_STATE_GO_SLEEP          ((EcuM_StateType) 0x49U)
   #define ECUM_STATE_STARTUP_ONE       ((EcuM_StateType) 0x11U)
 //  #define ECUM_STATE_WAKEUP_TWO        ((EcuM_StateType) 0x24U)
 //  #define ECUM_STATE_WAKEUP_REACTION   ((EcuM_StateType) 0x23U)
 //  #define ECUM_STATE_APP_POST_RUN      ((EcuM_StateType) 0x33U)
-//  #define ECUM_STATE_GO_OFF_TWO        ((EcuM_StateType) 0x4EU)
-//  #define ECUM_STATE_GO_OFF_ONE        ((EcuM_StateType) 0x4DU)
+  #define ECUM_STATE_GO_OFF_TWO        ((EcuM_StateType) 0x4EU)
+  #define ECUM_STATE_GO_OFF_ONE        ((EcuM_StateType) 0x4DU)
 
   //=============================================================================
   // EcuM_WakeupSourceType
@@ -129,6 +130,11 @@
 
   EXTERN_C void EcuM_SleepActivity       (void);
   EXTERN_C void EcuM_CheckWakeup         (EcuM_WakeupSourceType wakeupSource);
+
+  EXTERN_C void EcuM_OnPrepShutdown(void);
+  EXTERN_C void EcuM_OnGoSleep(void);
+  EXTERN_C void EcuM_OnGoOffOne(void);
+  EXTERN_C void EcuM_OnGoOffTwo(void);
   EXTERN_C Std_ReturnType EcuM_SelectShutdownTarget(EcuM_StateType target, uint8 mode);
   EXTERN_C Std_ReturnType EcuM_GetShutdownTarget(EcuM_StateType* shutdownTarget, uint8* sleepMode);
   EXTERN_C Std_ReturnType EcuM_GetLastShutdownTarget(EcuM_StateType* shutdownTarget, uint8* sleepMode);
@@ -143,6 +149,5 @@
   EXTERN_C void EcuM_AL_SwitchOff        (void);
 
   EXTERN_C Std_ReturnType EcuM_SelectBootTarget(EcuM_BootTargetType target);
-
 
 #endif // ECUM_2014_10_09_H

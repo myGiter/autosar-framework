@@ -16,7 +16,7 @@ const Port_ConfigType Port_ConfigSet =
   {
     {
       // Port_PinType(ID).
-      PORT_PIN_C_8,
+      USER_LED_BLUE,
       // Set Port_PinMode.
       PORT_PIN_MODE_DIO,
       // Is Port_PinModeChangeable?
@@ -30,13 +30,27 @@ const Port_ConfigType Port_ConfigSet =
     },
     {
       // Port_PinType(ID).
-      PORT_PIN_C_9,
+      USER_LED_GREEN,
       // Set Port_PinMode.
       PORT_PIN_MODE_DIO,
       // Is Port_PinModeChangeable?
 //      STD_OFF,
       // Set Port_PinDirectionType.
       PORT_PIN_OUT,
+      // Is Port_PinDirectionChangeable?
+//      STD_OFF,
+      // Set Port_PinLevelValue.
+      PORT_PIN_LEVEL_HIGH
+    },
+    {
+      // Port_PinType(ID).
+      USER_BUTTON,
+      // Set Port_PinMode.
+      PORT_PIN_MODE_DIO,
+      // Is Port_PinModeChangeable?
+//      STD_OFF,
+      // Set Port_PinDirectionType.
+      PORT_PIN_IN,
       // Is Port_PinDirectionChangeable?
 //      STD_OFF,
       // Set Port_PinLevelValue.

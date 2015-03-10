@@ -1435,6 +1435,9 @@
     <Filter Include="Src\Mcal\X86PC_MSVC\Bsw\Mcal\Reg">
       <UniqueIdentifier>{44e32597-a72f-4203-a83a-953a75900bff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Mcal\STM32F100\Bsw\Common\Pwr">
+      <UniqueIdentifier>{7720b302-3b33-4e2a-9956-6387888fb186}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\_make\Code_000.gmk">
@@ -2429,9 +2432,6 @@
     <ClCompile Include="Src\Mcal\STM32F100\Bsw\Mcal\Spi\Spi.cpp">
       <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Spi</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Mcal\STM32F100\Bsw\Mcal\Wdg\mcal_wdg.cpp">
-      <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Wdg</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Mcal\STM32F100\Bsw\Mcal\Wdg\Wdg.cpp">
       <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Wdg</Filter>
     </ClCompile>
@@ -3412,9 +3412,6 @@
     <ClInclude Include="Src\Mcal\STM32F100\Bsw\Mcal\Spi\Spi_ConfigTypes.h">
       <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Spi</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Mcal\STM32F100\Bsw\Mcal\Wdg\mcal_wdg.h">
-      <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Wdg</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Mcal\STM32F100\Bsw\Mcal\Wdg\Wdg_ConfigTypes.h">
       <Filter>Src\Mcal\STM32F100\Bsw\Mcal\Wdg</Filter>
     </ClInclude>
@@ -3666,6 +3663,9 @@
     </ClInclude>
     <ClInclude Include="Src\Gen\Bsw\Util\Types\Boolean.h">
       <Filter>Src\Gen\Bsw\Util\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Mcal\STM32F100\Bsw\Common\Pwr\McalPwr.h">
+      <Filter>Src\Mcal\STM32F100\Bsw\Common\Pwr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,15 +10,25 @@
 #include <Bsw/Servl/EcuM/EcuM.h>
 #include <Bsw/Servl/Osal/Os.h>
 #include <Bsw/Mcal/Mcal.h>
+#include <Bsw/Util/Time/Time.hpp>
 
 namespace
 {
   EcuM_StateType EcuM_MyState;
+  EcuM_StateType EcuM_MyShutdownState;
+
+  typedef util::timer<uint32> timer_type;
+  timer_type sleep_timer;
 }
 
 void EcuM_SetStateViaHiddenFunction(const EcuM_StateType EcuM_State)
 {
   EcuM_MyState = EcuM_State;
+}
+
+void EcuM_SetShutdownStateViaHiddenFunction(const EcuM_StateType EcuM_State)
+{
+  EcuM_MyShutdownState = EcuM_State;
 }
 
 EXTERN_C
@@ -128,6 +138,30 @@ Std_ReturnType EcuM_GetState(EcuM_StateType* EcuM_StatePtr)
 }
 
 EXTERN_C
+void EcuM_OnPrepShutdown(void)
+{
+  EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_PREP_SHUTDOWN));
+}
+
+EXTERN_C
+void EcuM_OnGoSleep(void)
+{
+  EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_GO_SLEEP));
+}
+
+EXTERN_C
+void EcuM_OnGoOffOne(void)
+{
+  EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_GO_OFF_ONE));
+}
+
+EXTERN_C
+void EcuM_OnGoOffTwo(void)
+{
+  EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_GO_OFF_TWO));
+}
+
+EXTERN_C
 void EcuM_SleepActivity(void)
 {
   // poll wakeup source.
@@ -137,48 +171,100 @@ void EcuM_SleepActivity(void)
 EXTERN_C
 void EcuM_ShutdownHook(void)
 {
-
+  EcuM_Shutdown();
 }
 
 EXTERN_C
 void EcuM_Shutdown(void)
 {
-// SLEEP?
-// OFF?
-// RESET?
+  EcuM_OnGoOffTwo();
+  EcuM_StateType get_shutdown_state;
+  Std_ReturnType myReturnState = EcuM_GetShutdownTarget(&get_shutdown_state, nullptr);
+  static_cast<void>(myReturnState);
 
-  EcuM_AL_SwitchOff(); // Endless loop.
+  // RESET:
+  if(get_shutdown_state == ECUM_STATE_RESET)
+  {
+    // reset the ECU using:
+    #if (MCU_PERFORM_RESET_API == STD_ON)
+      Mcu_PerformReset();
+    #endif // MCU_PERFORM_RESET_API == STD_ON or Callout
+  }
+  // OFF:
+  EcuM_AL_SwitchOff();
 }
 
 EXTERN_C
 void EcuM_AL_SwitchOff(void)
 {
-  // Endless Loop
+  // or WDG will Reset.
   for(;;)
   {
+    mcal::cpu::nop();
   }
-
-  // Or limit the endless loop and after a sufficient long time
-  // reset the ECU using:
-  // Mcu_PerformReset();
 }
 
+EXTERN_C
+Std_ReturnType EcuM_SelectShutdownTarget(EcuM_StateType target, uint8 mode)
+{
+  static_cast<void>(mode);
+  EcuM_OnPrepShutdown();
+  Std_ReturnType ReturnState = E_OK;
+
+  switch(target)
+  {
+    case ECUM_STATE_SLEEP:
+      EcuM_SetShutdownStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_SLEEP));
+    break;
+
+    case ECUM_STATE_RESET:
+      EcuM_SetShutdownStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_RESET));
+    break;
+
+    case ECUM_STATE_OFF:
+      EcuM_SetShutdownStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_OFF));
+    break;
+
+    default:
+      ReturnState = E_NOT_OK;
+    break;
+  }
+
+  return ReturnState;
+}
+
+EXTERN_C
+Std_ReturnType EcuM_GetShutdownTarget(EcuM_StateType* shutdownTarget, uint8* sleepMode)
+{
+  static_cast<void>(sleepMode);
+
+  if(shutdownTarget != nullptr)
+  {
+    *shutdownTarget = EcuM_MyShutdownState;
+
+    return E_OK;
+  }
+  else
+  {
+    return E_NOT_OK;
+  }
+}
 
 EXTERN_C
 void EcuM_MainFunction(void)
 {
+  EcuM_StateType getting_shutdown_state;
+  Std_ReturnType returnState = EcuM_GetShutdownTarget(&getting_shutdown_state, nullptr);
+  static_cast<void>(returnState);
+
   switch(EcuM_MyState)
   {
     case ECUM_STATE_STARTUP:
       
       break;
 
-    case ECUM_STATE_RESET:
-      
-      break;
-
     case ECUM_STATE_SHUTDOWN:
-      
+      ShutdownOS();
       break;
 
     case ECUM_STATE_APP_RUN:
@@ -189,8 +275,41 @@ void EcuM_MainFunction(void)
          
       break;
 
-    case ECUM_STATE_OFF:
-      
+    case ECUM_STATE_GO_OFF_ONE:
+         
+      break;
+
+    case ECUM_STATE_GO_OFF_TWO:
+         
+      break;
+
+    case ECUM_STATE_PREP_SHUTDOWN:
+      if(getting_shutdown_state == ECUM_STATE_SLEEP)
+      {
+        EcuM_OnGoSleep();
+      }
+      if(getting_shutdown_state == (ECUM_STATE_RESET | ECUM_STATE_OFF))
+      {
+        EcuM_OnGoOffOne();
+      }
+      break;
+
+    case ECUM_STATE_GO_SLEEP:
+//        EcuM_GenerateRamHash();
+      Dio_WriteChannel(DIO_CHANNEL_C_8, STD_HIGH);
+      sleep_timer.blocking_delay(timer_type::milliseconds(1));
+      do
+      {
+        Mcu_SetMode(static_cast<Mcu_ModeType>(1));
+      }
+      while(Dio_ReadChannel(DIO_CHANNEL_A_0) == static_cast<Dio_LevelType>(STD_HIGH));
+      sleep_timer.blocking_delay(timer_type::milliseconds(1));
+      Dio_WriteChannel(DIO_CHANNEL_C_8, STD_LOW);
+      EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_WAKEUP));
+      break;
+
+    case ECUM_STATE_WAKEUP:
+      EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_RUN));
       break;
 
     default:
