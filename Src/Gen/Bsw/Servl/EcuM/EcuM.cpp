@@ -10,15 +10,11 @@
 #include <Bsw/Servl/EcuM/EcuM.h>
 #include <Bsw/Servl/Osal/Os.h>
 #include <Bsw/Mcal/Mcal.h>
-#include <Bsw/Util/Time/Time.hpp>
 
 namespace
 {
   EcuM_StateType EcuM_MyState;
   EcuM_StateType EcuM_MyShutdownState;
-
-  typedef util::timer<uint32> timer_type;
-  timer_type sleep_timer;
 }
 
 void EcuM_SetStateViaHiddenFunction(const EcuM_StateType EcuM_State)
@@ -295,16 +291,8 @@ void EcuM_MainFunction(void)
       break;
 
     case ECUM_STATE_GO_SLEEP:
-//        EcuM_GenerateRamHash();
-      Dio_WriteChannel(DIO_CHANNEL_C_8, STD_HIGH);
-      sleep_timer.blocking_delay(timer_type::milliseconds(1));
-      do
-      {
-        Mcu_SetMode(static_cast<Mcu_ModeType>(1));
-      }
-      while(Dio_ReadChannel(DIO_CHANNEL_A_0) == static_cast<Dio_LevelType>(STD_HIGH));
-      sleep_timer.blocking_delay(timer_type::milliseconds(1));
-      Dio_WriteChannel(DIO_CHANNEL_C_8, STD_LOW);
+//      EcuM_GenerateRamHash();
+      Mcu_SetMode(static_cast<Mcu_ModeType>(1));
       EcuM_SetStateViaHiddenFunction(static_cast<EcuM_StateType>(ECUM_STATE_WAKEUP));
       break;
 

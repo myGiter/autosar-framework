@@ -10,6 +10,7 @@
 #include <Bsw/Common/Cpu/McalCpu.h>
 #include <Bsw/Mcal/Mcu/Mcu.h>
 #include <Bsw/Mcal/Reg/Reg.h>
+#include <Bsw/Mcal/Wdg/Wdg.h>
 
 EXTERN_C
 void Mcu_Init(const Mcu_ConfigType* McuConfig)
@@ -76,4 +77,14 @@ Mcu_ResetType Mcu_GetResetReason(void)
   }
 
   return reason;
+}
+
+EXTERN_C
+void Mcu_SetMode(Mcu_ModeType McuMode)
+{
+  if(McuMode == static_cast<Mcu_ModeType>(1))
+  {
+    Wdg_Trigger();
+//    McalPwrSleepOnExit();
+  }
 }

@@ -31,6 +31,7 @@ Std_ReturnType Adc_SetupResultBuffer(Adc_GroupType Group, Adc_ValueGroupType* Da
 EXTERN_C
 void Adc_DeInit(void)
 {
+
 }
 
 EXTERN_C
