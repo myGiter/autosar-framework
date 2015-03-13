@@ -29,7 +29,7 @@ void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level)
   static_cast<void>(ChannelId);
   static_cast<void>(Level);
 
-  (Level == STD_HIGH) ? mcal::reg::piob: ;
+//  (Level == STD_HIGH) ? mcal::reg::piob: ;
 }
 
 EXTERN_C

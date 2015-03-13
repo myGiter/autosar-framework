@@ -45,3 +45,9 @@ Std_ReturnType Mcu_DistributePllClock(void)
 
   return E_OK;
 }
+
+EXTERN_C
+void Mcu_SetMode(Mcu_ModeType McuMode)
+{
+  static_cast<void>(McuMode);
+}
